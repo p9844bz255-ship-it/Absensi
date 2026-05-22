@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Informasi Siswa - EduAttend</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#1a1c1f",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary-fixed-dim": "#e9c400",
+                        "on-surface": "#1a1b1f",
+                        "tertiary": "#5d5e63",
+                        "surface-container-high": "#e9e7ed",
+                        "on-tertiary-fixed-variant": "#45474b",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6cb",
+                        "surface-variant": "#e3e2e7",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#544600",
+                        "surface": "#faf9fe",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eeedf3",
+                        "outline": "#7e775f",
+                        "on-secondary-fixed-variant": "#474746",
+                        "primary-fixed": "#ffe16d",
+                        "on-surface-variant": "#4d4732",
+                        "secondary-container": "#e2dfde",
+                        "surface-bright": "#faf9fe",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#221b00",
+                        "tertiary-container": "#d9d9de",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-container": "#636262",
+                        "inverse-primary": "#e9c400",
+                        "tertiary-fixed": "#e2e2e7",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "background": "#faf9fe",
+                        "on-background": "#1a1b1f",
+                        "outline-variant": "#d0c6ab",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f1f0f5",
+                        "surface-tint": "#705d00",
+                        "secondary-fixed": "#e5e2e1",
+                        "inverse-surface": "#2f3034",
+                        "on-tertiary-container": "#5d5f63",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-low": "#f4f3f8",
+                        "surface-dim": "#dad9df",
+                        "on-primary-container": "#705e00",
+                        "primary-container": "#ffd700",
+                        "error-container": "#ffdad6",
+                        "primary": "#705d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "16px",
+                        "card-internal-padding": "16px",
+                        "stack-gap-lg": "24px",
+                        "stack-gap-sm": "8px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "400" }],
+                        "display-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F2F2F7; }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .scroll-container {
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Entrance Animations Styles */
+        .animate-on-load {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .animate-on-load.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .avatar-scale {
+            transform: scale(0.8);
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .avatar-scale.visible {
+            transform: scale(1);
+        }
+
+        /* Glass Shimmer Effect */
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .shimmer::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 40%,
+                rgba(255,255,255,0.4) 50%,
+                rgba(255,255,255,0) 60%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(45deg);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .shimmer:hover::after {
+            opacity: 1;
+            left: 100%;
+            top: 100%;
+        }
+    </style>
+</head>
+<body class="bg-[#F2F2F7] text-on-background h-[100dvh] overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-surface-container-low/70 backdrop-blur-xl shadow-sm flex items-center justify-between px-container-padding h-16 transition-colors">
+<div class="flex items-center gap-4">
+<button aria-label="Back" class="active:scale-90 duration-200 text-on-surface hover:bg-surface-container-high p-2 rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">Informasi Siswa</h1>
+</div>
+</header>
+<main class="h-full w-full overflow-y-auto scroll-container pt-24 pb-12 px-container-padding max-w-3xl mx-auto space-y-stack-gap-lg">
+<!-- Search Bar -->
+<div class="relative w-full animate-on-load" style="transition-delay: 100ms;">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+</div>
+<input class="w-full bg-surface-container-lowest border border-surface-variant rounded-full py-3 pl-12 pr-12 font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 shadow-[0px_4px_20px_rgba(0,0,0,0.04)] transition-all" placeholder="Cari nama siswa..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-2 flex items-center">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-container-high rounded-full active:scale-95">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+</div>
+</div>
+<!-- Profile Card -->
+<section class="animate-on-load bg-white/40 backdrop-blur-2xl border border-white/20 rounded-[40px] p-12 shadow-[0_20px_50px_rgba(0,0,0,0.05)] flex flex-col items-center text-center relative overflow-hidden min-h-[400px] justify-center glass-card shimmer" style="transition-delay: 200ms;">
+<div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-primary-container/20 to-transparent"></div>
+<div class="relative w-32 h-32 rounded-full border-4 border-surface-container-lowest shadow-md mb-4 z-10 overflow-hidden avatar-scale">
+<img alt="Eva Robinson Profile" class="w-full h-full object-cover" data-alt="A high-quality, realistic profile portrait of a female student with neutral background. Soft lighting, professional composition, modern minimalist style suitable for an educational platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD74qov9usoQ_UZOS0WXG7JTym--acriTOLNmPNVxpy4ALhYqfHG7NCrfkMqO2uACBiQ3Hiyq0wkh_NPLWY2IbXz5uX_0nPXXNDmyDsAoSwCjLMacKQ0aUK9Stpoadh1IkqxIetC4YRPLFIMketBSVjoOyW_pCJqdz_RbkAkuUwMDXPvG4xM_y3gXSbxiDBu_ncpJC0S-K134FJ4E87UaXZ6h3f00iCwXsfR_K4s1MgP2xnSCachfQsAv4GAEKl391l0m98DaaRIhQ"/>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface z-10">Muhammad bin Abdullah</h2>
+<p class="font-body-md text-body-md text-on-surface-variant z-10 mt-1">Kelas 10 AE 1</p>
+</section>
+<!-- Attendance Summary -->
+<section class="space-y-stack-gap-md mt-12 animate-on-load" style="transition-delay: 300ms;">
+<h3 class="font-headline-sm text-headline-sm text-on-surface ml-2">Ringkasan Absensi</h3>
+<div class="grid grid-cols-2 gap-4">
+<!-- Hadir Card -->
+<div class="bg-surface-container-lowest rounded-[32px] shadow-sm flex items-center gap-6 relative overflow-hidden group border border-surface-variant/20 p-4 active:scale-95 hover:shadow-md transition-all cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary-container"></div>
+<div class="w-12 h-12 rounded-full bg-primary-container/20 text-primary flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="check_circle" data-weight="fill">check_circle</span>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest text-[10px]">Hadir</span>
+<span class="font-display-lg text-display-lg text-on-surface font-bold">1</span>
+</div>
+</div>
+<!-- Izin Card -->
+<div class="bg-surface-container-lowest rounded-[32px] shadow-sm flex items-center gap-6 relative overflow-hidden group border border-surface-variant/20 p-4 active:scale-95 hover:shadow-md transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-surface-variant/30 text-on-surface-variant flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="mail" data-weight="fill">mail</span>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest text-[10px]">Izin</span>
+<span class="font-display-lg text-display-lg text-on-surface font-bold">2</span>
+</div>
+</div>
+<!-- Sakit Card -->
+<div class="bg-surface-container-lowest rounded-[32px] shadow-sm flex items-center gap-6 relative overflow-hidden group border border-surface-variant/20 p-4 active:scale-95 hover:shadow-md transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-surface-variant/30 text-on-surface-variant flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="medical_services" data-weight="fill">medical_services</span>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest text-[10px]">Sakit</span>
+<span class="font-display-lg text-display-lg text-on-surface font-bold">3</span>
+</div>
+</div>
+<!-- Alpa Card -->
+<div class="bg-surface-container-lowest rounded-[32px] shadow-sm flex items-center gap-6 relative overflow-hidden group border border-surface-variant/20 p-4 active:scale-95 hover:shadow-md transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-surface-variant/30 text-on-surface-variant flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-2xl" data-icon="cancel" data-weight="fill">cancel</span>
+</div>
+<div class="flex flex-col flex-grow">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest text-[10px]">Alpa</span>
+<span class="font-display-lg text-display-lg text-on-surface font-bold">0</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Attendance History -->
+<section class="space-y-stack-gap-md mt-12 pb-8 animate-on-load" style="transition-delay: 400ms;">
+<h3 class="font-headline-sm text-headline-sm text-on-surface ml-2">Riwayat Absensi</h3>
+<!-- Date Filters -->
+<div class="flex gap-3 overflow-x-auto pb-4 scrollbar-hide px-1 snap-x">
+<button class="flex-1 min-w-[160px] bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full py-3.5 px-6 flex items-center justify-between gap-3 active:scale-95 transition-all group snap-start" id="btn-date-start" onclick="openCustomCalendar('start')">
+<div class="flex flex-col items-start overflow-hidden">
+<span class="text-[10px] uppercase tracking-wider text-on-surface-variant/60 font-bold">Dari</span>
+<span class="text-sm font-semibold text-on-surface truncate">Pilih Tanggal</span>
+</div>
+<span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform">calendar_month</span>
+</button>
+<button class="flex-1 min-w-[160px] bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full py-3.5 px-6 flex items-center justify-between gap-3 active:scale-95 transition-all group snap-start" id="btn-date-end" onclick="openCustomCalendar('end')">
+<div class="flex flex-col items-start overflow-hidden">
+<span class="text-[10px] uppercase tracking-wider text-on-surface-variant/60 font-bold">Sampai</span>
+<span class="text-sm font-semibold text-on-surface truncate">Pilih Tanggal</span>
+</div>
+<span class="material-symbols-outlined text-primary group-hover:rotate-12 transition-transform">calendar_month</span>
+</button>
+</div>
+<!-- Attendance Table -->
+<div class="bg-white/40 backdrop-blur-2xl border border-white/20 rounded-[32px] shadow-[0_10px_30px_rgba(0,0,0,0.03)] overflow-hidden glass-card">
+<div class="overflow-x-auto scroll-container">
+<table class="w-full text-left border-collapse min-w-[400px]">
+<thead>
+<tr class="border-b border-surface-variant/30 text-label-md text-on-surface-variant">
+<th class="py-5 px-6 font-semibold">Tanggal</th>
+<th class="py-5 px-3 font-semibold text-center">Hadir</th>
+<th class="py-5 px-3 font-semibold text-center">Izin</th>
+<th class="py-5 px-3 font-semibold text-center">Sakit</th>
+<th class="py-5 px-3 font-semibold text-center">Alpa</th>
+</tr>
+</thead>
+<tbody class="text-body-md text-on-surface">
+<tr class="border-b border-surface-variant/20 last:border-0 hover:bg-primary-container/10 transition-colors group cursor-default">
+<td class="py-4 px-6 whitespace-nowrap font-medium group-hover:text-primary transition-colors">12 Okt 2023</td>
+<td class="py-4 px-3 text-center">
+<span class="material-symbols-outlined text-primary text-xl scale-0 group-hover:scale-100 transition-transform duration-300 inline-block" style="scale: 1;">check</span>
+</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+</tr>
+<tr class="border-b border-surface-variant/20 last:border-0 hover:bg-primary-container/10 transition-colors group cursor-default">
+<td class="py-4 px-6 whitespace-nowrap font-medium group-hover:text-primary transition-colors">11 Okt 2023</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center">
+<span class="material-symbols-outlined text-on-surface-variant text-xl group-hover:scale-110 transition-transform inline-block">check</span>
+</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+</tr>
+<tr class="border-b border-surface-variant/20 last:border-0 hover:bg-primary-container/10 transition-colors group cursor-default">
+<td class="py-4 px-6 whitespace-nowrap font-medium group-hover:text-primary transition-colors">10 Okt 2023</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center">
+<span class="material-symbols-outlined text-on-surface-variant text-xl group-hover:scale-110 transition-transform inline-block">check</span>
+</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+</tr>
+<tr class="border-b border-surface-variant/20 last:border-0 hover:bg-error/5 transition-colors group cursor-default">
+<td class="py-4 px-6 whitespace-nowrap font-medium group-hover:text-error transition-colors">09 Okt 2023</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center text-surface-variant/60">-</td>
+<td class="py-4 px-3 text-center">
+<span class="material-symbols-outlined text-error text-xl group-hover:rotate-90 transition-transform inline-block">close</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<!-- Modals Overlay -->
+<div class="fixed inset-0 bg-black/40 backdrop-blur-md z-[100] transition-opacity duration-300 opacity-0 pointer-events-none" id="modal-overlay"></div>
+<!-- Calendar Modal -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] max-w-[360px] bg-white/90 dark:bg-black/80 backdrop-blur-2xl border border-white/60 rounded-[40px] shadow-2xl z-[110] transition-all duration-400 p-6 flex flex-col gap-4 opacity-0 pointer-events-none scale-75 blur-sm" id="modal-calendar">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-headline-md text-on-surface">Pilih Tanggal</h3>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 active:scale-95 transition-all text-on-surface" id="btn-close-calendar">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex items-center justify-between mb-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all text-on-surface">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="font-headline-sm text-on-surface">Oktober 2023</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all text-on-surface">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7 gap-y-3 gap-x-1 text-center text-sm">
+<div class="text-on-surface-variant/60 font-medium pb-2">Su</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Mo</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Tu</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">We</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Th</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Fr</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Sa</div>
+<div class="text-on-surface-variant/40 py-2">28</div>
+<div class="text-on-surface-variant/40 py-2">29</div>
+<div class="text-on-surface-variant/40 py-2">30</div>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">1</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">2</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">3</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">4</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">5</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">6</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">7</button>
+<button class="py-2 rounded-full date-btn bg-[#ffd700] text-black font-bold shadow-[0_4px_12px_rgba(255,215,0,0.4)] active-date transition-all scale-110">8</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">9</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">10</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">11</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn bg-black/5 text-primary transition-colors">12</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">13</button>
+<button class="py-2 rounded-full date-btn hover:bg-black/5 text-on-surface transition-colors">14</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">15</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">16</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">17</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">18</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">19</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">20</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn text-on-surface transition-colors">21</button>
+</div>
+<div class="flex gap-3 mt-4">
+<button class="flex-1 text-on-surface font-headline-sm py-3 rounded-full hover:bg-black/5 active:scale-95 transition-all min-h-[44px]" id="btn-cancel-calendar">Batal</button>
+<button class="flex-1 bg-[#ffd700] text-black font-headline-sm py-3 rounded-full shadow-[0_4px_15px_rgba(255,215,0,0.3)] active:scale-95 transition-all min-h-[44px]" id="btn-ok-calendar">OK</button>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Staggered Entrance Animations
+        const animElements = document.querySelectorAll('.animate-on-load');
+        const avatar = document.querySelector('.avatar-scale');
+        
+        setTimeout(() => {
+            animElements.forEach(el => el.classList.add('visible'));
+            if(avatar) avatar.classList.add('visible');
+        }, 100);
+
+        // Calendar Interactions
+        const overlay = document.getElementById('modal-overlay');
+        const modal = document.getElementById('modal-calendar');
+        const btnCancel = document.getElementById('btn-cancel-calendar');
+        const btnOk = document.getElementById('btn-ok-calendar');
+        const btnClose = document.getElementById('btn-close-calendar');
+        let activeTarget = '';
+        let selectedDate = '8 Okt 2023';
+
+        window.openCustomCalendar = (target) => {
+            activeTarget = target;
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none', 'scale-75', 'blur-sm');
+            modal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100', 'blur-0');
+        };
+
+        const closeCalendar = () => {
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            
+            modal.classList.add('opacity-0', 'pointer-events-none', 'scale-75', 'blur-sm');
+            modal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100', 'blur-0');
+        };
+
+        overlay.addEventListener('click', closeCalendar);
+        btnCancel.addEventListener('click', closeCalendar);
+        btnClose.addEventListener('click', closeCalendar);
+
+        const dateBtns = document.querySelectorAll('.date-btn:not(.text-on-surface-variant\\/40)');
+        dateBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if(!e.currentTarget.textContent.trim()) return;
+
+                dateBtns.forEach(b => {
+                    b.classList.remove('bg-[#ffd700]', 'text-black', 'font-bold', 'shadow-[0_4px_12px_rgba(255,215,0,0.4)]', 'active-date', 'scale-110');
+                    if(!b.classList.contains('text-primary')) {
+                         b.classList.add('hover:bg-black/5', 'text-on-surface');
+                    }
+                });
+                const target = e.currentTarget;
+                target.classList.remove('hover:bg-black/5', 'text-on-surface');
+                target.classList.add('bg-[#ffd700]', 'text-black', 'font-bold', 'shadow-[0_4px_12px_rgba(255,215,0,0.4)]', 'active-date', 'scale-110');
+                selectedDate = `${target.textContent} Okt 2023`;
+            });
+        });
+
+        btnOk.addEventListener('click', () => {
+            const btn = document.getElementById('btn-date-' + activeTarget);
+            if (btn) {
+                const textSpan = btn.querySelector('span.truncate');
+                textSpan.textContent = selectedDate;
+                textSpan.classList.add('text-primary');
+                // Mini pulse animation on set
+                btn.classList.add('ring-2', 'ring-primary/50');
+                setTimeout(() => btn.classList.remove('ring-2', 'ring-primary/50'), 600);
+            }
+            closeCalendar();
+        });
+    });
+</script>
+</body></html>

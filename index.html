@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="en" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Tabel Kehadiran Siswa</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Premium Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUpBounce {
+            0% {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            70% {
+                transform: translate(-50%, -10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            opacity: 0;
+        }
+
+        .animate-float-bar {
+            animation: slideUpBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Staggered Delays for Cards */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-fade-in-up, .animate-float-bar {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .transition-all, .active\:scale-95 {
+                transition: none !important;
+                transform: none !important;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#1a1c1f",
+                        "surface-container-highest": "#e3e2e7",
+                        "primary-fixed-dim": "#e9c400",
+                        "on-surface": "#1a1b1f",
+                        "tertiary": "#5d5e63",
+                        "surface-container-high": "#e9e7ed",
+                        "on-tertiary-fixed-variant": "#45474b",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6cb",
+                        "surface-variant": "#e3e2e7",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#544600",
+                        "surface": "#faf9fe",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#eeedf3",
+                        "outline": "#7e775f",
+                        "on-secondary-fixed-variant": "#474746",
+                        "primary-fixed": "#ffe16d",
+                        "on-surface-variant": "#4d4732",
+                        "secondary-container": "#e2dfde",
+                        "surface-bright": "#faf9fe",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#221b00",
+                        "tertiary-container": "#d9d9de",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-container": "#636262",
+                        "inverse-primary": "#e9c400",
+                        "tertiary-fixed": "#e2e2e7",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "background": "#F8F8FA",
+                        "on-background": "#1a1b1f",
+                        "outline-variant": "#d0c6ab",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f1f0f5",
+                        "surface-tint": "#705d00",
+                        "secondary-fixed": "#e5e2e1",
+                        "inverse-surface": "#2f3034",
+                        "on-tertiary-container": "#5d5f63",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-low": "#f4f3f8",
+                        "surface-dim": "#dad9df",
+                        "on-primary-container": "#705e00",
+                        "primary-container": "#ffd700",
+                        "error-container": "#ffdad6",
+                        "primary": "#705d00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap-md": "20px",
+                        "card-internal-padding": "16px",
+                        "stack-gap-lg": "24px",
+                        "stack-gap-sm": "8px",
+                        "container-padding": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "400" }],
+                        "display-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+      max-width: 480px;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen relative overflow-x-hidden pb-40"><div class="fixed left-0 top-1/4 w-1 h-32 bg-purple-500/30 blur-[2px] rounded-r-full pointer-events-none z-0"></div>
+<!-- Ambient Glassmorphism Blobs -->
+<div class="fixed top-[-10%] left-[-10%] w-[50%] h-[40%] rounded-full bg-primary-container/20 blur-[80px] pointer-events-none"></div>
+<div class="fixed bottom-[10%] right-[-10%] w-[60%] h-[50%] rounded-full bg-tertiary-container/30 blur-[100px] pointer-events-none"></div>
+<!-- TopAppBar -->
+<header class="bg-white/40 dark:bg-black/10 backdrop-blur-xl border-b border-white/20 fixed top-0 w-full max-w-[480px] z-50 flex items-center px-container-padding h-[60px] justify-center">
+<div class="font-headline-md text-[18px] font-bold text-primary dark:text-primary-fixed-dim">Student Attendance</div>
+</header>
+<!-- Main Content -->
+<main class="pt-[84px] px-container-padding relative z-10 w-full">
+<!-- Page Title Header -->
+<div class="mb-5 flex flex-col gap-1">
+<h1 class="font-display-lg text-display-lg text-on-surface">Dashboard Absensi</h1><p class="text-on-surface-variant font-label-md text-[12px] opacity-70 tracking-wider mt-1">AL-WILDAN ISLAMIC SCHOOL 3 BSD CITY</p>
+</div>
+<!-- Filters -->
+<div class="flex items-center gap-3 mb-6 overflow-x-auto pb-1 scrollbar-hide -mx-container-padding px-container-padding">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/50 dark:bg-black/10 backdrop-blur-md border border-white/60 shadow-[0_4px_12px_rgba(0,0,0,0.02)] text-on-surface font-label-md active:scale-95 transition-all whitespace-nowrap" id="btn-filter-tanggal">
+<span class="" id="text-filter-tanggal">8 Okt 2023</span>
+<span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/50 dark:bg-black/10 backdrop-blur-md border border-white/60 shadow-[0_4px_12px_rgba(0,0,0,0.02)] text-on-surface font-label-md active:scale-95 transition-all whitespace-nowrap" id="btn-filter-kelas">
+<span class="" id="text-filter-kelas">Kelas 11 AE 2</span>
+<span class="material-symbols-outlined text-[16px]">keyboard_arrow_down</span>
+</button>
+</div>
+<!-- Student List -->
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-md text-headline-md text-on-surface">Absensi</h3>
+<button class="bg-[#ffd700] text-[#221b00] px-4 py-1.5 rounded-full font-label-md text-[13px] shadow-[0_4px_12px_rgba(255,215,0,0.2)] active:scale-95 transition-all">
+    Informasi Siswa
+  </button>
+</div>
+<div class="flex flex-col gap-stack-gap-md">
+<!-- Student 01 -->
+<div class="bg-white/40 dark:bg-white/5 backdrop-blur-xl rounded-[24px] border border-white/60 shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col gap-4 p-5 student-card animate-fade-in-up stagger-1">
+<div class="flex items-center gap-3">
+<span class="font-headline-sm text-headline-sm text-tertiary-fixed-dim w-5">01</span>
+<img alt="Manion Karam" class="w-12 h-12 rounded-full object-cover border-2 border-white/60 shadow-sm" src="https://lh3.googleusercontent.com/aida/ADBb0ug42fasnZmwPAzh_KkRlhuMJH74BGn5_z3I4-T1xn25UvdDfEQ-n3Gcqud0FvqySh1X3T97aoMASsUl2HjAKtMM0104ZY_Rq588LZHrIQf2CYHBR0gQGNIimrFOw7sjoQcAiJiXuEfxR_jcKc9NMR1UGxLiCN4MmN67sHMepAf3suG0c39jGqAahiylP1AOb4FNq-_VmCm9UDXgYZPfz6GqQWxAzNWM7ORIsK9F8lL3eh8kU4l7XNGWU2Y"/>
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Manion Karam</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant">NIS: 102938</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-hide"><div class="flex gap-2 w-full justify-between">
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Hadir</button>
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Izin</button>
+<button class="attendance-btn flex-1 bg-[#ffd700] text-[#705e00] shadow-[0_4px_12px_rgba(255,215,0,0.3)] font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 border border-transparent">Sakit</button>
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Alpa</button>
+</div></div>
+</div>
+<!-- Student 02 -->
+<div class="bg-white/40 dark:bg-white/5 backdrop-blur-xl rounded-[24px] border border-white/60 shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col gap-4 p-5 student-card animate-fade-in-up stagger-2">
+<div class="flex items-center gap-3">
+<span class="font-headline-sm text-headline-sm text-tertiary-fixed-dim w-5">02</span>
+<img alt="Sunila Nanah" class="w-12 h-12 rounded-full object-cover border-2 border-white/60 shadow-sm" src="https://lh3.googleusercontent.com/aida/ADBb0ug42fasnZmwPAzh_KkRlhuMJH74BGn5_z3I4-T1xn25UvdDfEQ-n3Gcqud0FvqySh1X3T97aoMASsUl2HjAKtMM0104ZY_Rq588LZHrIQf2CYHBR0gQGNIimrFOw7sjoQcAiJiXuEfxR_jcKc9NMR1UGxLiCN4MmN67sHMepAf3suG0c39jGqAahiylP1AOb4FNq-_VmCm9UDXgYZPfz6GqQWxAzNWM7ORIsK9F8lL3eh8kU4l7XNGWU2Y"/>
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Sunila Nanah</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant">NIS: 102939</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-hide"><div class="flex gap-2 w-full justify-between">
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Hadir</button>
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Izin</button>
+<button class="attendance-btn flex-1 bg-[#ffd700] text-[#705e00] shadow-[0_4px_12px_rgba(255,215,0,0.3)] font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 border border-transparent">Sakit</button>
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Alpa</button>
+</div></div>
+</div>
+<!-- Student 03 -->
+<div class="bg-white/40 dark:bg-white/5 backdrop-blur-xl rounded-[24px] border border-white/60 shadow-[0_4px_24px_rgba(0,0,0,0.04)] flex flex-col gap-4 p-5 student-card animate-fade-in-up stagger-3">
+<div class="flex items-center gap-3">
+<span class="font-headline-sm text-headline-sm text-tertiary-fixed-dim w-5">03</span>
+<img alt="Rarian Karam" class="w-12 h-12 rounded-full object-cover border-2 border-white/60 shadow-sm" src="https://lh3.googleusercontent.com/aida/ADBb0ug42fasnZmwPAzh_KkRlhuMJH74BGn5_z3I4-T1xn25UvdDfEQ-n3Gcqud0FvqySh1X3T97aoMASsUl2HjAKtMM0104ZY_Rq588LZHrIQf2CYHBR0gQGNIimrFOw7sjoQcAiJiXuEfxR_jcKc9NMR1UGxLiCN4MmN67sHMepAf3suG0c39jGqAahiylP1AOb4FNq-_VmCm9UDXgYZPfz6GqQWxAzNWM7ORIsK9F8lL3eh8kU4l7XNGWU2Y"/>
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Rarian Karam</h3>
+<p class="font-body-md text-[13px] text-on-surface-variant">NIS: 102940</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-2 overflow-x-auto pb-1 scrollbar-hide"><div class="flex gap-2 w-full justify-between">
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Hadir</button>
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Izin</button>
+<button class="attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70">Sakit</button>
+<button class="attendance-btn flex-1 bg-[#ffd700] text-[#705e00] shadow-[0_4px_12px_rgba(255,215,0,0.3)] font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 border border-transparent">Alpa</button>
+</div></div>
+</div>
+</div>
+</main>
+<!-- Floating Action Area -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-40px)] max-w-[440px] z-50 pointer-events-none pb-safe animate-float-bar">
+<div class="pointer-events-auto flex items-center gap-3 p-3 bg-white/30 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.06)] border border-white/40 rounded-[40px]">
+<button class="flex-1 bg-white/20 backdrop-blur-md border border-white/60 text-on-surface font-headline-sm text-[15px] py-3.5 px-4 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 hover:bg-white/40 shadow-sm rounded-3xl">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+      Teks WA
+    </button>
+<button class="flex-[1.5] bg-primary-container text-on-primary-container font-headline-sm text-[15px] py-3.5 px-4 shadow-[0_8px_16px_rgba(255,215,0,0.2)] hover:brightness-105 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 font-bold rounded-3xl">
+<span class="material-symbols-outlined fill text-[20px]">save</span>
+      Simpan Absensi
+    </button>
+</div>
+</div>
+<!-- Modals Overlay -->
+<div class="fixed inset-0 bg-black/40 backdrop-blur-md z-[60] transition-all duration-300 opacity-0 pointer-events-none" id="modal-overlay"></div>
+<!-- Calendar Modal -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] max-w-[360px] bg-white/90 dark:bg-black/80 backdrop-blur-2xl border border-white/60 rounded-[40px] shadow-2xl z-[70] transition-all duration-300 p-6 flex flex-col gap-4 opacity-0 pointer-events-none scale-95 origin-center" id="modal-calendar">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-headline-md text-on-surface">Pilih Tanggal</h3>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-black/5 hover:bg-black/10 active:scale-95 transition-all text-on-surface" id="btn-close-calendar">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex items-center justify-between mb-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="font-headline-sm text-on-surface">Oktober 2023</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7 gap-y-3 gap-x-1 text-center text-sm">
+<div class="text-on-surface-variant/60 font-medium pb-2">Su</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Mo</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Tu</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">We</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Th</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Fr</div>
+<div class="text-on-surface-variant/60 font-medium pb-2">Sa</div>
+<div class="text-on-surface-variant/40 py-2">28</div>
+<div class="text-on-surface-variant/40 py-2">29</div>
+<div class="text-on-surface-variant/40 py-2">30</div>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">1</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">2</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">3</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">4</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">5</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">6</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">7</button>
+<button class="py-2 rounded-full date-btn bg-[#ffd700] text-black font-bold shadow-[0_4px_12px_rgba(255,215,0,0.4)] active-date transition-all active:scale-90">8</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">9</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">10</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">11</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn bg-black/5 text-primary transition-all active:scale-90">12</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">13</button>
+<button class="py-2 rounded-full date-btn hover:bg-black/5 transition-all active:scale-90">14</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">15</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">16</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">17</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">18</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">19</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">20</button>
+<button class="py-2 hover:bg-black/5 rounded-full date-btn transition-all active:scale-90">21</button>
+</div>
+<div class="flex gap-3 mt-4">
+<button class="flex-1 text-on-surface font-headline-sm py-3 rounded-full hover:bg-black/5 active:scale-95 transition-all min-h-[44px]" id="btn-cancel-calendar">Batal</button>
+<button class="flex-1 bg-[#ffd700] text-black font-headline-sm py-3 rounded-full shadow-[0_4px_15px_rgba(255,215,0,0.3)] active:scale-95 transition-all min-h-[44px]" id="btn-ok-calendar">OK</button>
+</div>
+</div>
+<!-- Class Dropdown Modal -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] max-w-[320px] bg-white/90 dark:bg-black/80 backdrop-blur-2xl border border-white/60 rounded-[32px] shadow-2xl z-[70] transition-all duration-300 p-2 flex flex-col gap-1 max-h-[60vh] overflow-hidden opacity-0 pointer-events-none scale-95 origin-center" id="modal-kelas">
+<div class="font-headline-md text-on-surface px-4 py-3 mb-1 sticky top-0 bg-white/90 dark:bg-black/90 backdrop-blur-md z-10 border-b border-black/5 dark:border-white/5">Pilih Kelas</div>
+<div class="overflow-y-auto px-2 pb-2 scrollbar-hide flex flex-col gap-1">
+<button class="class-item text-left px-4 py-3.5 rounded-2xl active:scale-95 transition-all text-on-surface font-body-lg min-h-[44px] flex justify-between items-center">
+        Kelas 10 AE 1
+</button>
+<button class="class-item text-left px-4 py-3.5 rounded-2xl hover:bg-black/5 active:scale-95 transition-all text-on-surface font-body-lg min-h-[44px]">Kelas 10 AE 2</button>
+<button class="class-item text-left px-4 py-3.5 rounded-2xl hover:bg-black/5 active:scale-95 transition-all text-on-surface font-body-lg min-h-[44px]">Kelas 10 MIPA 1</button>
+<button class="class-item text-left px-4 py-3.5 rounded-2xl hover:bg-black/5 active:scale-95 transition-all text-on-surface font-body-lg min-h-[44px]">Kelas 10 MIPA 2</button>
+<button class="class-item text-left px-4 py-3.5 rounded-2xl hover:bg-black/5 active:scale-95 transition-all text-on-surface font-body-lg min-h-[44px]">Kelas 11 AE 1</button>
+<button class="class-item text-left px-4 py-3.5 rounded-2xl hover:bg-black/5 active:scale-95 transition-all text-on-surface font-body-lg min-h-[44px] bg-primary-container/30 text-primary-fixed-dim font-bold">Kelas 11 AE 2<span class="material-symbols-outlined text-[20px] text-primary">check</span></button>
+<button class="class-item text-left px-4 py-3.5 rounded-2xl hover:bg-black/5 active:scale-95 transition-all text-on-surface font-body-lg min-h-[44px]">Kelas 12 AE 1</button>
+</div>
+</div>
+<style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        .pb-safe {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('modal-overlay');
+        const modalCalendar = document.getElementById('modal-calendar');
+        const modalKelas = document.getElementById('modal-kelas');
+        
+        const btnFilterTanggal = document.getElementById('btn-filter-tanggal');
+        const textFilterTanggal = document.getElementById('text-filter-tanggal');
+        const btnFilterKelas = document.getElementById('btn-filter-kelas');
+        const textFilterKelas = document.getElementById('text-filter-kelas');
+        
+        const btnOkCalendar = document.getElementById('btn-ok-calendar');
+        const btnCancelCalendar = document.getElementById('btn-cancel-calendar');
+        const btnCloseCalendar = document.getElementById('btn-close-calendar');
+        const classItems = document.querySelectorAll('.class-item');
+        const dateBtns = document.querySelectorAll('.date-btn:not(.text-on-surface-variant\\/40)');
+
+        let selectedDate = '14 Okt 2023';
+
+        function openModal(modal) {
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+            
+            modal.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
+            modal.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+        }
+
+        function closeModals() {
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            
+            [modalCalendar, modalKelas].forEach(modal => {
+                modal.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
+                modal.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+            });
+        }
+
+        btnFilterTanggal.addEventListener('click', () => openModal(modalCalendar));
+        btnFilterKelas.addEventListener('click', () => openModal(modalKelas));
+        overlay.addEventListener('click', closeModals);
+        btnCancelCalendar.addEventListener('click', closeModals);
+        btnCloseCalendar.addEventListener('click', closeModals);
+
+        dateBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if(!e.currentTarget.textContent.trim()) return;
+
+                dateBtns.forEach(b => {
+                    b.classList.remove('bg-[#ffd700]', 'text-black', 'font-bold', 'shadow-[0_4px_12px_rgba(255,215,0,0.4)]', 'active-date');
+                    if(!b.classList.contains('text-primary')) {
+                         b.classList.add('hover:bg-black/5');
+                    }
+                });
+                const target = e.currentTarget;
+                target.classList.remove('hover:bg-black/5');
+                target.classList.add('bg-[#ffd700]', 'text-black', 'font-bold', 'shadow-[0_4px_12px_rgba(255,215,0,0.4)]', 'active-date');
+                selectedDate = `${target.textContent} Okt 2023`;
+            });
+        });
+
+        btnOkCalendar.addEventListener('click', () => {
+            textFilterTanggal.textContent = selectedDate;
+            closeModals();
+        });
+
+        classItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                classItems.forEach(c => {
+                    c.classList.remove('bg-primary-container/30', 'text-primary-fixed-dim', 'font-bold');
+                    const icon = c.querySelector('.material-symbols-outlined');
+                    if(icon) icon.remove();
+                });
+                
+                const target = e.currentTarget;
+                target.classList.add('bg-primary-container/30', 'text-primary-fixed-dim', 'font-bold');
+                
+                const checkIcon = document.createElement('span');
+                checkIcon.className = 'material-symbols-outlined text-[20px] text-primary';
+                checkIcon.textContent = 'check';
+                target.appendChild(checkIcon);
+
+                textFilterKelas.textContent = target.textContent.replace('check', '').trim();
+                setTimeout(closeModals, 150);
+            });
+        });
+
+        // Attendance Buttons Logic
+        const studentCards = document.querySelectorAll('.student-card');
+        studentCards.forEach(card => {
+            const attendanceBtns = card.querySelectorAll('.attendance-btn');
+            
+            attendanceBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    attendanceBtns.forEach(b => {
+                        b.className = "attendance-btn flex-1 bg-white/50 dark:bg-black/5 text-on-surface border border-white/40 font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 hover:bg-white/70";
+                    });
+                    
+                    const target = e.currentTarget;
+                    target.className = "attendance-btn flex-1 bg-[#ffd700] text-[#705e00] shadow-[0_4px_12px_rgba(255,215,0,0.3)] font-label-md text-label-md py-2.5 px-3 rounded-full whitespace-nowrap active:scale-95 transition-all duration-200 border border-transparent";
+                });
+            });
+        });
+    });
+</script>
+</body></html>
